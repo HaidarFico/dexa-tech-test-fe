@@ -6,12 +6,15 @@ function RegisterForm() {
     const navigate = useNavigate();
     const [emailAddress, setEmailAddress] = useState("");
     const [password, setPassword] = useState("");
+    const [role, setRole] = useState("hr");
 
     const handleSubmit = async (e: SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
+        console.log(role)
         const response = await axios.post('http://localhost:3000/auth/register', {
             email_address: emailAddress,
             password: password,
+            user_role: role,
         });
         console.log(response)
         if (response.status !== 201) {
@@ -30,6 +33,18 @@ function RegisterForm() {
                 <div className="form-group">
                     <label>Password</label>
                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="form-control" id="password" placeholder="Password" />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="role">Role</label>
+                    <select
+                        className="form-control"
+                        id="role"
+                        name="role"
+                        onChange={(e) => setRole(e.target.value)}
+                    >
+                        <option value="hr">HR</option>
+                        <option value="user">Employee</option>
+                    </select>
                 </div>
                 <button type="submit" className="btn btn-primary">Submit</button>
             </form>

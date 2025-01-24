@@ -12,6 +12,7 @@ import EmployeeDataAdministration from './pages/EmployeeDataAdministration/Emplo
 import TurnInRollCall from './pages/TurnInRollCall/TurnInRollCall.tsx';
 import EditEmployeeData from './pages/EditEmployeeData/EditEmployeeData.tsx';
 import ViewRollCallPhoto from './pages/ViewRollCallPhoto/ViewRollCallPhoto.tsx';
+import { ProtectedRoute } from './routes/ProtectedRoute.tsx';
 
 const router = createBrowserRouter([
   {
@@ -21,7 +22,10 @@ const router = createBrowserRouter([
   },
   {
     path: '/dashboard',
-    element: <Dashboard />,
+    element: 
+    <ProtectedRoute>
+      <Dashboard />
+    </ProtectedRoute>,
   },
   {
     path: '/login',
@@ -32,28 +36,36 @@ const router = createBrowserRouter([
     element: <Register />,
   },
   {
-    path: '/dashboard',
-    element: <Dashboard />,
-  },
-  {
     path: '/all-roll-call',
-    element: <ViewAllRollCalls />,
+    element: 
+    <ProtectedRoute>
+      <ViewAllRollCalls />
+    </ProtectedRoute>,
   },
   {
     path: '/all-roll-call/:photoId',
-    element: <ViewRollCallPhoto />,
+    element: 
+    <ProtectedRoute>
+      <ViewRollCallPhoto />
+    </ProtectedRoute>,
   },
   {
     path: '/employee-data',
-    element: <EmployeeDataAdministration />,
+    element: <ProtectedRoute>
+      <EmployeeDataAdministration />
+    </ProtectedRoute>,
   },
   {
     path: '/employee-data/:userId',
-    element: <EditEmployeeData />,
+    element: <ProtectedRoute>
+      <EditEmployeeData />
+    </ProtectedRoute>,
   },
   {
     path: '/roll-call',
-    element: <TurnInRollCall/>,
+    element: <ProtectedRoute>
+      <TurnInRollCall />
+    </ProtectedRoute>,
   },
 ]);
 

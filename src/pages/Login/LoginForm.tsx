@@ -22,7 +22,7 @@ function LoginForm() {
         const tokenDecoded: any = jwtDecode(token);
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         localStorage.setItem('user-id', tokenDecoded.userId);
-        localStorage.setItem('user-roles', 'temp');
+        localStorage.setItem('user-roles', tokenDecoded.roles);
         return navigate('/dashboard');
     }
 
