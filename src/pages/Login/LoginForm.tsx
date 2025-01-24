@@ -19,7 +19,7 @@ function LoginForm() {
             return navigate('/login');
         }
         const token = response.data.data.token;
-        const tokenDecoded = jwtDecode(token);
+        const tokenDecoded: any = jwtDecode(token);
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         localStorage.setItem('user-id', tokenDecoded.userId);
         localStorage.setItem('user-roles', 'temp');

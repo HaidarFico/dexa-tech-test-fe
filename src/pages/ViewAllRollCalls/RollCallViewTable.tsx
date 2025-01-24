@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { NavLink } from "react-router";
 
 function RollCallViewTable() {
     const [data, setData] = useState([]);
@@ -35,18 +36,22 @@ function RollCallViewTable() {
                 <thead className="thead-dark">
                     <tr>
                         <th>RollCallId</th>
+                        <th>Full Name</th>
                         <th>UserId</th>
                         <th>ClockInTime</th>
                         <th>ClockOutTime</th>
+                        <th>Photo</th>
                     </tr>
                 </thead>
                 <tbody>
                     {data.map((val: any) => (
                         <tr key={val.rollCallId}>
                             <td>{val.rollCallId}</td>
+                            <td>{val.fullName}</td>
                             <td>{val.userId}</td>
                             <td>{val.clockInTime}</td>
                             <td>{val.clockOutTime}</td>
+                            <td><NavLink to={`/all-roll-call/${val.photoId}`}>see photo</NavLink></td>
                         </tr>
                     ))}
                 </tbody>

@@ -10,6 +10,8 @@ import Register from './pages/Register/Register.tsx';
 import ViewAllRollCalls from './pages/ViewAllRollCalls/ViewAllRollCalls.tsx';
 import EmployeeDataAdministration from './pages/EmployeeDataAdministration/EmployeeDataAdministration.tsx';
 import TurnInRollCall from './pages/TurnInRollCall/TurnInRollCall.tsx';
+import EditEmployeeData from './pages/EditEmployeeData/EditEmployeeData.tsx';
+import ViewRollCallPhoto from './pages/ViewRollCallPhoto/ViewRollCallPhoto.tsx';
 
 const router = createBrowserRouter([
   {
@@ -38,8 +40,16 @@ const router = createBrowserRouter([
     element: <ViewAllRollCalls />,
   },
   {
+    path: '/all-roll-call/:photoId',
+    element: <ViewRollCallPhoto />,
+  },
+  {
     path: '/employee-data',
     element: <EmployeeDataAdministration />,
+  },
+  {
+    path: '/employee-data/:userId',
+    element: <EditEmployeeData />,
   },
   {
     path: '/roll-call',

@@ -4,19 +4,32 @@ import { useNavigate } from "react-router";
 
 function RollCallForm() {
     const [currentDate, setDate] = useState(new Date().toISOString().slice(0, 19).replace('T', ' '));
+    const [file, setFile] = useState<Blob | null>(null);
     const navigate = useNavigate();
 
     const handleSubmit = async (e: SyntheticEvent) => {
         e.preventDefault();
-        console.log(localStorage.getItem('user-id'))
         const currentTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
-        const response = await axios.post('http://localhost:3000/roll-call-administration/roll-call', 
+        const formData = new FormData();
+        const userId: any = localStorage.getItem('user-id')
+        formData.append('user_id', userId);
+        formData.append('clock_in_time', currentTime);
+        formData.append('photo', file);
+
+        const response = await axios.post('http://localhost:3000/roll-call-administration/roll-call',
+            formData,
             {
-                user_id: localStorage.getItem('user-id'),
-                clock_in_time: currentTime,
+                headers: { "Content-Type": "multipart/form-data" }
             }
         );
+        // const response = await axios.post('http://localhost:3000/roll-call-administration/roll-call', 
+        //     {
+        //         user_id: localStorage.getItem('user-id'),
+        //         clock_in_time: currentTime,
+        //     },
+
+        // );
         if (response.status !== 201) {
             return navigate('/home');
         }
@@ -33,6 +46,12 @@ function RollCallForm() {
         setDate(new Date().toISOString().slice(0, 19).replace('T', ' '));
     }, []);
 
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            setFile(e.target.files[0]);
+        }
+    };
+
     return (
         <>
             <h1>Current Time: {currentDate}</h1>
@@ -41,6 +60,10 @@ function RollCallForm() {
                     <label className="form-label">Default file input example</label>
                     <input className="form-control" type="file" id="formFile" />
                 </div> */}
+                <div className="input-group">
+                    <input id="file" type="file" onChange={handleFileChange} />
+                </div>
+
                 <button type="submit" className="btn btn-primary">Absen</button>
             </form>
         </>)
