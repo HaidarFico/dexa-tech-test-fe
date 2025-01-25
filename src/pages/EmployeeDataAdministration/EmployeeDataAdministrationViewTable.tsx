@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { NavLink } from "react-router";
+import { NavLink, redirect } from "react-router";
 import Pagination from 'react-bootstrap/Pagination';
 
 function EmployeeDataAdministrationViewTable() {
@@ -24,7 +24,7 @@ function EmployeeDataAdministrationViewTable() {
                     setData(employeeDataArray);
                     setLoading(false);
                 }).catch(() => {
-                    setError('Failed to fetch data');
+                    setError('Failed to fetch data, login again please!');
                     setLoading(false);
                 });
         }
@@ -33,17 +33,17 @@ function EmployeeDataAdministrationViewTable() {
     let items = [];
     items.push(
         <Pagination.Item key='previous' onClick={(e) => {
-            if(page > 0){
+            if (page > 0) {
                 setPage(page - 1)
                 setLoading(true);
             }
-            }}>
+        }}>
             Previous
         </Pagination.Item>,
         <Pagination.Item key='next' onClick={(e) => {
             setPage(page + 1)
             setLoading(true);
-            }}>
+        }}>
             Next
         </Pagination.Item>,
     );

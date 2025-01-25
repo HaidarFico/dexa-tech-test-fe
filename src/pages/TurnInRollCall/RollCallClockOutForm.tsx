@@ -3,38 +3,43 @@ import { MouseEvent, SyntheticEvent, useCallback, useEffect, useState } from "re
 import { useNavigate } from "react-router";
 
 function RollCallClockOutForm({ currentRollCall }: any) {
-    const [currentDate, setDate] = useState(new Date().toISOString().slice(0, 19).replace('T', ' '));
+    const timeZoneOffset = new Date().getTimezoneOffset() * 60000;
+    const [currentDate, setDate] = useState(new Date(Date.now() - timeZoneOffset).toISOString().slice(0, 19).replace('T', ' '));
     const navigate = useNavigate();
 
     const handleSubmit = async (e: SyntheticEvent) => {
-        e.preventDefault();
-        const currentTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
+        try {
+            e.preventDefault();
+            const currentTime = new Date(Date.now() - timeZoneOffset).toISOString().slice(0, 19).replace('T', ' ');
 
-        const response = await axios.put(`${process.env.REACT_APP_BE_URL}/roll-call-administration/roll-call`,
-            {
-                user_id: localStorage.getItem('user-id'),
-                clock_out_time: currentTime,
-            },
-            {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+            const response = await axios.put(`${process.env.REACT_APP_BE_URL}/roll-call-administration/roll-call`,
+                {
+                    user_id: localStorage.getItem('user-id'),
+                    clock_out_time: currentTime,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+                    }
                 }
+            );
+            if (response.status !== 200) {
+                return navigate('/home');
             }
-        );
-        if (response.status !== 200) {
-            return navigate('/home');
+            location.reload();
+        } catch(err) {
+            console.log(err);
+            location.reload();
         }
-        location.reload();
-        // return navigate('/roll-call');
     };
 
     useEffect(() => {
         const timerID = setInterval(() => tick(), 1000);
         return () => clearInterval(timerID);
     }, []);
-    
+
     const tick = useCallback(() => {
-        setDate(new Date().toISOString().slice(0, 19).replace('T', ' '));
+        setDate(new Date(Date.now() - timeZoneOffset).toISOString().slice(0, 19).replace('T', ' '));
     }, []);
 
     return (

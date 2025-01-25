@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Pagination } from "react-bootstrap";
-import { NavLink } from "react-router";
+import { NavLink, redirect } from "react-router";
 
 function RollCallViewTable() {
+    const timeZoneOffset = new Date().getTimezoneOffset() * 60000;
     const [data, setData] = useState([]);
     const [page, setPage] = useState(0);
     const [loading, setLoading] = useState(true);
@@ -23,7 +24,7 @@ function RollCallViewTable() {
                     setData(employeeRollCallArray);
                     setLoading(false);
                 }).catch(() => {
-                    setError('Failed to fetch data');
+                    setError('Failed to fetch data, login again please!');
                     setLoading(false);
                 });
         }
@@ -53,6 +54,8 @@ function RollCallViewTable() {
             Next
         </Pagination.Item>,
     );
+    console.log(Date.parse(data[0].clockInTime));
+    console.log(new Date(Date.parse(data[0].clockInTime) - timeZoneOffset).toISOString().slice(0, 19).replace('T', ' '));
 
     return (
         <div className="container mt-4">
@@ -74,8 +77,10 @@ function RollCallViewTable() {
                             <td>{val.rollCallId}</td>
                             <td>{val.fullName}</td>
                             <td>{val.userId}</td>
-                            <td>{val.clockInTime}</td>
-                            <td>{val.clockOutTime}</td>
+                            <td>{new Date(Date.parse(val.clockInTime) - timeZoneOffset).toISOString().slice(0, 19).replace('T', ' ')}</td>
+                            <td>{val.clockOutTime ? new Date(Date.parse(val.clockOutTime) - timeZoneOffset).toISOString().slice(0, 19).replace('T', ' '): null}</td>
+                            {/* <td>{val.clockInTime}</td> */}
+                            {/* <td>{val.clockOutTime}</td> */}
                             <td><NavLink to={`/all-roll-call/${val.photoId}`}>see photo</NavLink></td>
                         </tr>
                     ))}
