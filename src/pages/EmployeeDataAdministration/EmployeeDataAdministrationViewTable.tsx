@@ -11,8 +11,6 @@ function EmployeeDataAdministrationViewTable() {
     const [error, setError] = useState('');
 
     useEffect(() => {
-        console.log('LOADING')
-        console.log(page)
         if (loading === true) {
             axios.get(`${process.env.REACT_APP_BE_URL}/employee-administration/employee-data?page=${page}`,
                 {

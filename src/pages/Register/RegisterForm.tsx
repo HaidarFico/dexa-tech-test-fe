@@ -10,13 +10,11 @@ function RegisterForm() {
 
     const handleSubmit = async (e: SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(role)
         const response = await axios.post(`${process.env.REACT_APP_BE_URL}/auth/register`, {
             email_address: emailAddress,
             password: password,
             user_role: role,
         });
-        console.log(response)
         if (response.status !== 201) {
             return navigate('/register');
         }

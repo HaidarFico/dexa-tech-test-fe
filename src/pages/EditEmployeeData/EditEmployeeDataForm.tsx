@@ -22,7 +22,6 @@ function EditEmployeeDataForm() {
                 }
             )
             .then((res) => {
-                    console.log(res.data.data)
                     const employeeData = res.data.data;
                     if(employeeData.gender === null) {
                         employeeData.gender = 'm';
@@ -30,7 +29,6 @@ function EditEmployeeDataForm() {
                     setData(employeeData);
                     setLoading(false);
                 }).catch((res) => {
-                    console.log(res)
                     setError('Failed to fetch data');
                     setLoading(false);
                 });
@@ -45,7 +43,6 @@ function EditEmployeeDataForm() {
     }
     const handleSubmit = async (e: any) => {
         e.preventDefault();
-        console.log(data);
         const response = await axios.post(
             `${process.env.REACT_APP_BE_URL}/employee-administration/employee-data`,
             {
@@ -62,7 +59,6 @@ function EditEmployeeDataForm() {
             }
         );
         if (response.status !== 200) {
-            console.log(response);
             return location.reload();
         }
         return navigate('/employee-data')
