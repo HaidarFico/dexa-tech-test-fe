@@ -10,21 +10,22 @@ function LoginForm() {
     const [password, setPassword] = useState("");
 
     const handleSubmit = async (e: SyntheticEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const response = await axios.post(`${process.env.REACT_APP_BE_URL}/auth/login`, {
-            email_address: emailAddress,
-            password: password,
-        });
-        if (response.status !== 200) {
-            return navigate('/login');
-        }
-        const token = response.data.data.token;
-        const tokenDecoded: any = jwtDecode(token);
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        localStorage.setItem('user-id', tokenDecoded.userId);
-        localStorage.setItem('user-roles', tokenDecoded.roles);
-        localStorage.setItem('accessToken', token);
-        return navigate('/dashboard');
+        try {
+            e.preventDefault();
+            const response = await axios.post(`${process.env.REACT_APP_BE_URL}/auth/login`, {
+                email_address: emailAddress,
+                password: password,
+            });
+            const token = response.data.data.token;
+            const tokenDecoded: any = jwtDecode(token);
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            localStorage.setItem('user-id', tokenDecoded.userId);
+            localStorage.setItem('user-roles', tokenDecoded.roles);
+            localStorage.setItem('accessToken', token);
+            return navigate('/dashboard');
+        } catch(err) {
+            return location.reload();
+        } 
     }
 
     return (
