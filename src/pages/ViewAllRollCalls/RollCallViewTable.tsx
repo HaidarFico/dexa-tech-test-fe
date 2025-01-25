@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { Pagination } from "react-bootstrap";
 import { NavLink } from "react-router";
 
 function RollCallViewTable() {
@@ -10,7 +11,13 @@ function RollCallViewTable() {
 
     useEffect(() => {
         if (loading === true) {
-            axios.get(`http://localhost:3000/roll-call-administration/roll-call?page=${page}`)
+            axios.get(`${process.env.REACT_APP_BE_URL}/roll-call-administration/roll-call?page=${page}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+                    }
+                }
+            )
                 .then((res) => {
                     const employeeRollCallArray = res.data.data.employeeRollCallArray[0];
                     setData(employeeRollCallArray);
@@ -28,6 +35,24 @@ function RollCallViewTable() {
     if (error !== '') {
         return <div className="text-center text-danger mt-4">{error}</div>;
     }
+
+    let items = [];
+    items.push(
+        <Pagination.Item key='previous' onClick={(e) => {
+            if (page > 0) {
+                setPage(page - 1)
+                setLoading(true);
+            }
+        }}>
+            Previous
+        </Pagination.Item>,
+        <Pagination.Item key='next' onClick={(e) => {
+            setPage(page + 1)
+            setLoading(true);
+        }}>
+            Next
+        </Pagination.Item>,
+    );
 
     return (
         <div className="container mt-4">
@@ -56,6 +81,9 @@ function RollCallViewTable() {
                     ))}
                 </tbody>
             </table>
+            <div>
+                <Pagination>{items}</Pagination>
+            </div>
         </div>
     );
 };

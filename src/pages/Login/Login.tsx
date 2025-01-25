@@ -5,13 +5,15 @@ import { NavLink } from "react-router";
 function Login() {
     return (
         <>
-            <div>Login</div>
-            <LoginForm></LoginForm>
-            <NavLink to={'/register'}>
-                <div>Don't have an account?</div>
+            <h1 className="text-center">Login</h1>
+            <div className="d-flex justify-content-center align-items-center">
+                <LoginForm></LoginForm>
+            </div>
+            <NavLink to={'/register'} className='d-flex justify-content-center mt-3'>
+                <p>Don't have an account?</p>
             </NavLink>
-            <NavLink to={'/dashboard'}>
-                <div>Home</div>
+            <NavLink to={'/'} className='d-flex justify-content-center mt-1'>
+                <p>Home</p>
             </NavLink>
         </>
     )

@@ -5,15 +5,17 @@ import { NavLink } from "react-router";
 function Register() {
     return (
         <>
-            <div>Register</div>
-            <RegisterForm></RegisterForm>
-            <NavLink to={'/login'}>
+            <h1 className="text-center">Register</h1>
+            <div className="d-flex justify-content-center align-items-center">
+                <RegisterForm></RegisterForm>
+            </div>
+            <NavLink to={'/login'} className='d-flex justify-content-center mt-3'>
                 <div>Already have an account?</div>
             </NavLink>
-            <NavLink to={'/'}>
+            <NavLink to={'/'} className='d-flex justify-content-center mt-1'>
                 <div>Home</div>
             </NavLink>
-        </>    )
+        </>)
 }
 
 export default Register;

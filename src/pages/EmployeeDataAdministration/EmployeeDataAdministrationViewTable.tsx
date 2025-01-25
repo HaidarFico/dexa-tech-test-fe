@@ -1,16 +1,26 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router";
+import Pagination from 'react-bootstrap/Pagination';
 
 function EmployeeDataAdministrationViewTable() {
+
     const [data, setData] = useState([]);
     const [page, setPage] = useState(0);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
     useEffect(() => {
+        console.log('LOADING')
+        console.log(page)
         if (loading === true) {
-            axios.get(`http://localhost:3000/employee-administration/employee-data?page=${page}`)
+            axios.get(`${process.env.REACT_APP_BE_URL}/employee-administration/employee-data?page=${page}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+                    }
+                }
+            )
                 .then((res) => {
                     const employeeDataArray = res.data.data.employeeDataArray[0];
                     setData(employeeDataArray);
@@ -20,7 +30,25 @@ function EmployeeDataAdministrationViewTable() {
                     setLoading(false);
                 });
         }
-    }, []);
+    }, [page]);
+
+    let items = [];
+    items.push(
+        <Pagination.Item key='previous' onClick={(e) => {
+            if(page > 0){
+                setPage(page - 1)
+                setLoading(true);
+            }
+            }}>
+            Previous
+        </Pagination.Item>,
+        <Pagination.Item key='next' onClick={(e) => {
+            setPage(page + 1)
+            setLoading(true);
+            }}>
+            Next
+        </Pagination.Item>,
+    );
 
     if (loading) {
         return <div className="text-center mt-4">Loading...</div>;
@@ -57,6 +85,9 @@ function EmployeeDataAdministrationViewTable() {
                     ))}
                 </tbody>
             </table>
+            <div>
+                <Pagination>{items}</Pagination>
+            </div>
         </div>
     );
 };

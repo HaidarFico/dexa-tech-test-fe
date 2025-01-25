@@ -14,7 +14,13 @@ function EditEmployeeDataForm() {
 
     useEffect(() => {
         if (loading === true) {
-            axios.get(`http://localhost:3000/employee-administration/employee-data/${params.userId}`)
+            axios.get(`${process.env.REACT_APP_BE_URL}/employee-administration/employee-data/${params.userId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+                    }
+                }
+            )
             .then((res) => {
                     console.log(res.data.data)
                     const employeeData = res.data.data;
@@ -41,13 +47,18 @@ function EditEmployeeDataForm() {
         e.preventDefault();
         console.log(data);
         const response = await axios.post(
-            'http://localhost:3000/employee-administration/employee-data',
+            `${process.env.REACT_APP_BE_URL}/employee-administration/employee-data`,
             {
                 "user_id": data.userId,
                 "full_name": data.fullName,
                 "date_of_birth": data.dateOfBirth,
                 "gender": data.gender,
                 "position": data.position
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+                }
             }
         );
         if (response.status !== 200) {

@@ -1,9 +1,13 @@
+import ImageAuth from "image-auth";
+
 function Photo({ photoId }) {
 
-    const imageLink = `http://localhost:3000/roll-call-administration/roll-call/photo/${photoId}`
+    const imageLink = `${process.env.REACT_APP_BE_URL}/roll-call-administration/roll-call/photo/${photoId}`
     return (
         <>
-            <img src= {imageLink}></img>
+            <div className="mx-auto center text-center">
+                <ImageAuth mode="Auth" url={imageLink} config={{headers: {Authorization: `Bearer ${localStorage.getItem('accessToken')}`}}}></ImageAuth>
+            </div>
         </>
     );
 }

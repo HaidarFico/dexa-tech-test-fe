@@ -5,10 +5,10 @@ import RollCallViewTable from "./RollCallViewTable";
 function ViewAllRollCalls() {
     return (
         <>
-            <div>ViewAllRollCalls</div>
+            <h1 className="text-center">View All Roll Calls</h1>
             <RollCallViewTable />
             <NavLink to={'/dashboard'}>
-                <div>Back</div>
+                <button className="btn btn-outline-secondary m-2 col">Back</button>
             </NavLink>
         </>
     )

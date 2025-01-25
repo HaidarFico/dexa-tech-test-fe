@@ -17,24 +17,18 @@ function RollCallForm() {
         formData.append('clock_in_time', currentTime);
         formData.append('photo', file);
 
-        const response = await axios.post('http://localhost:3000/roll-call-administration/roll-call',
+        const response = await axios.post(`${process.env.REACT_APP_BE_URL}/roll-call-administration/roll-call`,
             formData,
             {
-                headers: { "Content-Type": "multipart/form-data" }
+                headers: { "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+                 }
             }
         );
-        // const response = await axios.post('http://localhost:3000/roll-call-administration/roll-call', 
-        //     {
-        //         user_id: localStorage.getItem('user-id'),
-        //         clock_in_time: currentTime,
-        //     },
-
-        // );
         if (response.status !== 201) {
             return navigate('/home');
         }
         location.reload();
-        // return navigate('/roll-call');
     };
 
     useEffect(() => {
@@ -54,18 +48,16 @@ function RollCallForm() {
 
     return (
         <>
-            <h1>Current Time: {currentDate}</h1>
-            <form onSubmit={handleSubmit}>
-                {/* <div className="mb-3">
-                    <label className="form-label">Default file input example</label>
-                    <input className="form-control" type="file" id="formFile" />
-                </div> */}
-                <div className="input-group">
-                    <input id="file" type="file" onChange={handleFileChange} />
-                </div>
-
-                <button type="submit" className="btn btn-primary">Absen</button>
-            </form>
+            <div className="row">
+                <h2 className="text-center">Current Time: {currentDate}</h2>
+                <h3 className="text-center">Clock In</h3>
+                <form onSubmit={handleSubmit}>
+                    <div className="input-group m-2">
+                        <input id="file" type="file" onChange={handleFileChange} />
+                    </div>
+                    <button type="submit" className="btn btn-outline-secondary m-2 col">Absen</button>
+                </form>
+            </div>
         </>)
 }
 

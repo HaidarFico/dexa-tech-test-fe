@@ -5,10 +5,10 @@ import Photo from "./Photo";
 function ViewRollCallPhoto() {
     return (
         <>
-            <div>ViewRollCallPhoto</div>
-            <Photo photoId={useParams().photoId} />
+            <h1 className="text-center">View Photo</h1>
+            <Photo photoId={useParams().photoId}  />
             <NavLink to={'/all-roll-call'}>
-                <div>Back</div>
+                <button className="btn btn-outline-secondary m-2">Back</button>
             </NavLink>
         </>
     )

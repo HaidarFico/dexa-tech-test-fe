@@ -5,10 +5,10 @@ import EmployeeDataAdministrationViewTable from "./EmployeeDataAdministrationVie
 function EmployeeDataAdministration() {
     return (
         <>
-            <div>ViewAllRollCalls</div>
+            <h1 className="text-center">View All Employee's Data</h1 >
             <EmployeeDataAdministrationViewTable />
             <NavLink to={'/dashboard'}>
-                <div>Back</div>
+                <button className="btn btn-outline-secondary m-2 col">Back</button>
             </NavLink>
         </>
     )
