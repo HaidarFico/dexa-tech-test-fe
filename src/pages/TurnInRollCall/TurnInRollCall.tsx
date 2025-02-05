@@ -18,19 +18,23 @@ function TurnInRollCall() {
         )
             .then((response) => {
                 const clockOutTime = response?.data?.data?.rollCallInstance?.clockOutTime;
-                if (clockOutTime === undefined || clockOutTime === null) {
+                const isResponseAvailable = response?.data?.data?.rollCallInstance ? true : false;
+                if (isResponseAvailable && (clockOutTime === undefined || clockOutTime === null)) {
                     setCurrentRollCallData(response?.data?.data?.rollCallInstance);
                     setIsRollCallActive(true);
                 } else {
                     setIsRollCallActive(false);
                 }
+            }).catch((err) => {
+                // console.log(`response error is like this ${err}`);
+                setIsRollCallActive(false);
             });
     });
     return (
         <>
             <NavBar />
             <h1 className="text-center">Roll Call</h1>
-                {isRollCallActive ? <RollCallClockOutForm currentRollCall={currentRollCallData} /> : <RollCallForm />}
+            {isRollCallActive ? <RollCallClockOutForm currentRollCall={currentRollCallData} /> : <RollCallForm />}
             <NavLink to={'/dashboard'}>
                 <button type="button" className="btn btn-outline-secondary m-2 col">Back</button>
             </NavLink>
