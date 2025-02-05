@@ -130,7 +130,7 @@ function EditEmployeeDataForm() {
                 </div>
 
                 {/* Submit Button */}
-                <button type="submit" className="btn btn-primary btn-block">
+                <button type="submit" className="btn btn-primary btn-block mt-2">
                     Submit
                 </button>
             </form>
