@@ -27,7 +27,7 @@ function RollCallClockOutForm({ currentRollCall }: any) {
                 return navigate('/home');
             }
             location.reload();
-        } catch(err) {
+        } catch (err) {
             console.log(err);
             location.reload();
         }
@@ -44,12 +44,15 @@ function RollCallClockOutForm({ currentRollCall }: any) {
 
     return (
         <>
-            <div className="container text-center">
-                <h1 className="text-center mt-3">Current Time: {currentDate}</h1>
-                <h2 className="text-center mt-1 mb-4">Clock-in Time: {currentRollCall.clockInTime.slice(0, 19).replace('T', ' ')}</h2>
-                <form onSubmit={handleSubmit}>
-                    <button type="submit" className="btn btn-outline-secondary m-2">Clock Out</button>
-                </form>
+            <div className="container d-flex justify-content-center align-items-center">
+                <div className="card shadow-lg p-4">
+                    <h3 className="card-title text-center">Clock Out</h3>
+                    <h5 className="card-title text-center">Clock In Time: {new Date(Date.parse(currentRollCall.clockInTime) - timeZoneOffset).toISOString().slice(0, 19).replace('T', ' ')}</h5>
+                    <h5 className="card-title text-center">Current Time: {currentDate}</h5>
+                    <form onSubmit={handleSubmit}>
+                        <div className="row"><button type="submit" className="btn btn-primary">Clock Out</button></div>
+                    </form>
+                </div>
             </div>
         </>)
 }

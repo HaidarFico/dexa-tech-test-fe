@@ -1,10 +1,12 @@
 import React from "react";
 import LoginForm from "./LoginForm";
 import { NavLink } from "react-router";
+import NavBar from "../../components/NavBar";
 
 function Login() {
     return (
         <>
+            <NavBar/>
             <h1 className="text-center">Login</h1>
             <div className="d-flex justify-content-center align-items-center">
                 <LoginForm></LoginForm>

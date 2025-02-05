@@ -20,9 +20,14 @@ function EmployeeDataAdministrationViewTable() {
                 }
             )
                 .then((res) => {
-                    const employeeDataArray = res.data.data.employeeDataArray[0];
-                    setData(employeeDataArray);
                     setLoading(false);
+                    let employeeDataArray = res.data.data.employeeDataArray[0];
+                    if(employeeDataArray.length  === 0) {
+                        // For an empty array
+                        employeeDataArray = data;
+                        setPage(page - 1);
+                    } 
+                    setData(employeeDataArray);
                 }).catch(() => {
                     setError('Failed to fetch data, login again please!');
                     setLoading(false);
@@ -32,7 +37,7 @@ function EmployeeDataAdministrationViewTable() {
 
     let items = [];
     items.push(
-        <Pagination.Item key='previous' onClick={(e) => {
+        <Pagination.Item key='previous' onClick={() => {
             if (page > 0) {
                 setPage(page - 1)
                 setLoading(true);
@@ -40,7 +45,7 @@ function EmployeeDataAdministrationViewTable() {
         }}>
             Previous
         </Pagination.Item>,
-        <Pagination.Item key='next' onClick={(e) => {
+        <Pagination.Item key='next' onClick={() => {
             setPage(page + 1)
             setLoading(true);
         }}>

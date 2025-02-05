@@ -32,7 +32,7 @@ function RollCallForm() {
                 return navigate('/home');
             }
             location.reload();
-        } catch(err) {
+        } catch (err) {
             console.log(err);
             location.reload();
         }
@@ -55,16 +55,22 @@ function RollCallForm() {
 
     return (
         <>
-            <div className="row">
-                <h2 className="text-center">Current Time: {currentDate}</h2>
-                <h3 className="text-center">Clock In</h3>
-                <form onSubmit={handleSubmit}>
-                    <h4 className="text-center">File Upload <strong>MUST</strong> Be An Image</h4>
-                    <div className="input-group m-2">
-                        <input id="file" type="file" onChange={handleFileChange} />
-                    </div>
-                    <button type="submit" className="btn btn-outline-secondary m-2 col">Absen</button>
-                </form>
+            <div className="container">
+                <h4 className="text-center">Current Time: {currentDate}</h4>
+            </div>
+            <div className="container d-flex justify-content-center align-items-center">
+                <div className="card shadow-lg p-4">
+                    <h5 className="card-title text-center">Upload Your Picture</h5>
+                    <form onSubmit={handleSubmit}>
+                        <div className="mb-3">
+                            <label className="form-label">Choose file</label>
+                            <input className="form-control" type="file" id="file" name="file" onChange={handleFileChange}/>
+                        </div>
+                        <div className="d-grid">
+                            <button type="submit" className="btn btn-primary">Upload and Clock In</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </>)
 }

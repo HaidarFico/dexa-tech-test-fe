@@ -1,10 +1,12 @@
 import React from "react";
 import RegisterForm from "./RegisterForm";
 import { NavLink } from "react-router";
+import NavBar from "../../components/NavBar";
 
 function Register() {
     return (
         <>
+            <NavBar />
             <h1 className="text-center">Register</h1>
             <div className="d-flex justify-content-center align-items-center">
                 <RegisterForm></RegisterForm>

@@ -20,15 +20,19 @@ function RollCallViewTable() {
                 }
             )
                 .then((res) => {
-                    const employeeRollCallArray = res.data.data.employeeRollCallArray[0];
-                    setData(employeeRollCallArray);
                     setLoading(false);
+                    let employeeRollCallArray = res.data.data.employeeRollCallArray[0];
+                    if (employeeRollCallArray.length === 0) {
+                        employeeRollCallArray = data;
+                        setPage(page - 1);
+                    }
+                    setData(employeeRollCallArray);
                 }).catch(() => {
                     setError('Failed to fetch data, login again please!');
                     setLoading(false);
                 });
         }
-    }, [loading]);
+    }, [page]);
 
     if (loading) {
         return <div className="text-center mt-4">Loading...</div>;
@@ -54,8 +58,6 @@ function RollCallViewTable() {
             Next
         </Pagination.Item>,
     );
-    console.log(Date.parse(data[0].clockInTime));
-    console.log(new Date(Date.parse(data[0].clockInTime) - timeZoneOffset).toISOString().slice(0, 19).replace('T', ' '));
 
     return (
         <div className="container mt-4">
